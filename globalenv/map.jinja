@@ -1,0 +1,19 @@
+{#- get dict of user configurations -#}
+{%- set env = salt['pillar.get']('globalenv', {'users': {}}, merge=True) -%}
+
+{#- update all user configuration with defaults -#}
+{%- do salt['defaults.update'](env.users, {'env': env.get('defaults', {})}) -%}
+
+{#- embed user information that will be reused (home, primary group, shell, paths) -#}
+{%- for user in env.users.keys() -%}
+  {%- do env.users[user].update({'name': user}) -%}
+  {%- set user_info = salt['user.info'](user) -%}
+  {%- load_yaml as user_info -%}
+group: {{ salt['user.primary_group'](user) }}
+home: {{ user_info.home }}
+shell: {{ user_info.shell.split('/')[-1] }}
+  {%- endload -%}
+  {%- do env.users[user].update(salt['defaults.merge'](user_info, env.users[user], in_place=False)) -%}
+{%- endfor -%}
+
+{%- do env.update({'users': env.users.values() | list}) -%}

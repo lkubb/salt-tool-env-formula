@@ -1,0 +1,7 @@
+globalenv:
+  users:
+    user:
+      env:
+        var_name: var_value
+  defaults:
+    default_var: default_value
