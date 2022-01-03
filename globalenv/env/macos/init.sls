@@ -21,4 +21,5 @@ Global environment variable '{{ name }}' is updated for applications launched fr
     - runas: {{ user.name }}
     - onchanges:
       - file: {{ user.home }}/Library/LaunchAgents/my.env.var.{{ name }}.plist
+  {%- endfor %}
 {%- endfor %}
