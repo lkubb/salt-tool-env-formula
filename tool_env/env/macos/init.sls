@@ -1,23 +1,22 @@
-# -*- coding: utf-8 -*-
 # vim: ft=sls
 
-{%- set tplroot = tpldir.split('/')[0] %}
+{%- set tplroot = tpldir.split("/")[0] %}
 {%- from tplroot ~ "/map.jinja" import mapdata as env with context %}
 {%- from tplroot ~ "/libtofs.jinja" import files_switch with context %}
 
 
-{%- for user in env.users | selectattr('env') %}
+{%- for user in env.users | selectattr("env") %}
 
 Global environment variables set at login of user '{{ user.name }}' are managed:
   file.managed:
     - names:
 {%-   for name, value in user.env.items() %}
-      - {{ user.home | path_join('Library', 'LaunchAgents', 'my.env.var.' ~ name ~ '.plist') }}:
+      - {{ user.home | path_join("Library", "LaunchAgents", "my.env.var." ~ name ~ ".plist") }}:
           - context:
               name: {{ name }}
               value: {{ value }}
 {%-   endfor %}
-    - source: {{ files_switch(['setenv.plist.jinja'],
+    - source: {{ files_switch(["setenv.plist.jinja"],
                               lookup="Global environment variables set at login of user '{}' are managed".format(user.name),
                               opt_prefixes=[user.name])
               }}
@@ -28,7 +27,7 @@ Global environment variables set at login of user '{{ user.name }}' are managed:
     - makedirs: true
 
 {%-   for name, value in user.env.items() %}
-{%-     set service_file = user.home | path_join('Library', 'LaunchAgents', 'my.env.var.' ~ name ~ '.plist') %}
+{%-     set service_file = user.home | path_join("Library", "LaunchAgents", "my.env.var." ~ name ~ ".plist") %}
 
 Global environment variable '{{ name }}' is updated for applications launched from now on by user '{{ user.name }}':
   cmd.run:

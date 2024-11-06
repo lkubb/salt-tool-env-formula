@@ -1,12 +1,11 @@
-# -*- coding: utf-8 -*-
 # vim: ft=sls
 
 include:
-{%- if 'Darwin' == grains['kernel'] %}
+{%- if grains.kernel == "Darwin" %}
   - .macos
-{%- elif 'Windows' == grains['kernel'] %}
+{%- elif grains.kernel == "Windows" %}
   - .windows
-{%- elif 'Linux' == grains['kernel'] %}
+{%- elif grains.kernel == "Linux" %}
   - .linux
 {%- endif %}
 

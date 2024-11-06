@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # vim: ft=yaml
 ---
 tool_global:
@@ -26,6 +25,7 @@ tool_env:
     paths:
       confdir: '.env'
       conffile: 'config'
+    rootgroup: root
 
   tofs:
     # The files_switch key serves as a selector for alternative
