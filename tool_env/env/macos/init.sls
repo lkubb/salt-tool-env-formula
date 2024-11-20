@@ -2,7 +2,7 @@
 
 {%- set tplroot = tpldir.split("/")[0] %}
 {%- from tplroot ~ "/map.jinja" import mapdata as env with context %}
-{%- from tplroot ~ "/libtofs.jinja" import files_switch with context %}
+{%- from tplroot ~ "/libtofsstack.jinja" import files_switch with context %}
 
 
 {%- for user in env.users | selectattr("env") %}
@@ -16,9 +16,12 @@ Global environment variables set at login of user '{{ user.name }}' are managed:
               name: {{ name }}
               value: {{ value }}
 {%-   endfor %}
-    - source: {{ files_switch(["setenv.plist.jinja"],
-                              lookup="Global environment variables set at login of user '{}' are managed".format(user.name),
-                              opt_prefixes=[user.name])
+    - source: {{ files_switch(
+                    ["setenv.plist.jinja"],
+                    lookup="Global environment variables set at login of user '{}' are managed".format(user.name),
+                    config=env,
+                    custom_data={"users": [user.name]},
+                 )
               }}
     - template: jinja
     - mode: '0600'

@@ -1,5 +1,5 @@
-Welcome to salt-tool-env-formula's documentation!
-=================================================
+Welcome to tool-env-formula's documentation!
+============================================
 
 .. toctree::
    :maxdepth: 2

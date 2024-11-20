@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "salt_tool_env"
+name = "tool_env_formula"
 version = "1.0.0"
 description = "Saltstack states to manage Global Environment Variables"
 authors = ["lkubb"]
